@@ -1,5 +1,5 @@
 class Process{
-    constructor(arrival_time, burst_time, process_name){
+    constructor(process_name, arrival_time, burst_time){
         this._arrival_time = arrival_time;
         this._remaining_time = burst_time;
         this._process_name = process_name;
