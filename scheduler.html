@@ -1,20 +1,68 @@
-<head>
-<script src="js/Process.js"></script>
-<script src="js/PQueue.js"></script>
-<script src="js/Scheduler.js"></script>
-<script src="js/test.js"></script>
-<link rel="stylesheet" href="css/styles.min.css">
-</head>
-<body>
-    <div>
-        Process name:
-        <input type="text" id="process_name_input" name="process_name"><br>
-        Arrival Time:
-        <input type="text" id="arrival_time_input" name="arrival_time"><br>
-        Burst Time:
-        <input type="text" id="burst_time_input" name="burst_time"><br>
-        <button onclick="testFunction()">add process</button>
-        <button onclick="printF()">print</button>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="styles/styles.min.css">
+        <link rel="stylesheet" href="styles/bootstrap.min.css">
+        <script src="styles/jQuery-2.2.4.min.js"></script>
+        <script src="styles/bootstrap.min.js"></script>
+        <script src="js/Process.js"></script>
+        <script src="js/PQueue.js"></script>
+        <script src="js/Scheduler.js"></script>
+        <script src="js/test.js"></script>
+        
 
-</body>
+    </head>
+    <body>
+        <div id="input_page">
+            <div class="row">
+                <div class="column left mt-5 input-card card text-white bg-dark">
+                    <form>
+                        <h3>ADD PROCESS</h1>
+                        <div class="form-group">
+                            <label for="process_name_input">Process Name: </label>
+                            <input type="text" class="form-ccontrol input" id="process_name_input" name="process_name"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="arrival_time_input">Arrival Time: </label>
+                            <input type="text" class="form-ccontrol input" id="arrival_time_input" name="arrival_time"><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="burst_time_input">Burst Time: </label>
+                            <input type="text" class="form-ccontrol input" id="burst_time_input" name="burst_time"><br>
+                        </div>
+                    </form>
+                    <br>                   
+                    <button class="btn btn-secondary" onclick="testFunction()">add process</button>
+                    
+                </div>
+
+                <div class="column right text-center mt-5 mb-5">
+                    <h3>ADDED PROCESSES</h3>
+                    <br>
+                    <div class="pr-5 pl-5">
+                        <div class="p-3 card bg-dark">
+                            <table class="table table-secondary table-sm" id="process_list">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Process Name</th>
+                                        <th>Arrival Time</th>
+                                        <th>Burst Time</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="printF()">Schedule</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results_page">
+
+        </div>
+
+    </body>
+</html>
