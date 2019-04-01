@@ -33,7 +33,7 @@
                         </div>
                     </form>
                     <br>                   
-                    <button class="btn btn-secondary" onclick="testFunction()">add process</button>
+                    <button class="btn btn-secondary" onclick="addProcess()">add process</button>
                     
                 </div>
 
@@ -55,12 +55,69 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="printF()">Schedule</button>
+                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="schedule()">Schedule</button>
                 </div>
             </div>
         </div>
 
         <div id="results_page">
+            <div class="row mt-5">
+                <div class="col-4">
+                    <h3>ADDED PROCESSES</h3>
+                    <br>
+                    <div class="pr-5 pl-5">
+                            <div class="p-3 card bg-dark">
+                                <table class="table table-secondary table-sm" id="process_table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Process Name</th>
+                                            <th>Arrival Time</th>
+                                            <th>Burst Time</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col pl-5 pr-5">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="h3 col-6 align-self-center text-center">
+                                            Avg. waiting time
+                                        </div>
+                                        <div class="h3 col-2 align-self-center text-center">
+                                            =
+                                        </div>
+                                        <div class="h2 col-4 align-self-center text-center">
+                                            5
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col pl-5 pr-5">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="h3 col-7 align-self-center text-center">
+                                            Avg. turnaround time
+                                        </div>
+                                        <div class="h3 col-2 align-self-center text-center">
+                                            =
+                                        </div>
+                                        <div class="h2 col-3 align-self-center text-center">
+                                            5
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 

@@ -13,7 +13,7 @@
 var scheduler = new Scheduler();
 var added_processes = []
 
-function testFunction(){
+function addProcess(){
     console.log("test running");
     var p_name = document.getElementById("process_name_input").value;
     var p_arrival = document.getElementById("arrival_time_input").value;
@@ -29,25 +29,25 @@ function testFunction(){
     schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
 }
 
+function clearTextField(elementRef){
+    elementRef.value = '';
+}
+
 function addToUnreceivedJobs(){
     for(var i = 0; i < this.added_processes.length; i++){
         scheduler.addUnreceivedJob(this.added_processes[i]);
     }
 }
 
-function clearTextField(elementRef){
-    elementRef.value = '';
-}
-
 function displayLast(){
     document.getElementById("input_page").style.display = "none";
 }
 
-function printF(){
+function schedule(){
     this.addToUnreceivedJobs();
-
-    //this.displayLast();
+    this.makeProcessTable();
     scheduler.schedule();
+    this.displayLast();
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
 }
@@ -91,8 +91,31 @@ function deleteAddedProcess(row){
         var schedule_btn = document.getElementById("schedule_btn");
         schedule_btn.setAttribute('class', "btn btn-primary btn-lg disabled");
     }
-    // console.log(row_id);
-    // var table = document.getElementById("process_list");
-    // var tr = document.getElementById(row_id);
-    // table.removeChild(tr);
+}
+
+function makeProcessTable(){
+    for(var i = 0; i < this.added_processes.length; i++){
+        this.addToProcessTable(this.added_processes[i]);
+    }
+}
+
+function addToProcessTable(process){
+    console.log("show added process running");
+    var table = document.getElementById("process_table");
+
+    var tr = document.createElement("tr");
+ 
+    var td_process_name = document.createElement("td");
+    var td_arrival_time = document.createElement("td");
+    var td_burst_time = document.createElement("td");
+    
+    td_process_name.innerText = process.getName();
+    td_arrival_time.innerText = process.getArrivalTime();
+    td_burst_time.innerText = process.getBurstTime();
+  
+    tr.appendChild(td_process_name);
+    tr.appendChild(td_arrival_time);
+    tr.appendChild(td_burst_time);
+
+    table.appendChild(tr);
 }

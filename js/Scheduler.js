@@ -54,7 +54,13 @@ class Scheduler{
     }
 
     calcAvgWaitingTime(){
-        
+        var total_waiting_time = 0;
+        var total_no_of_processes = this._finished_jobs.length;
+        for(var i =0; i < total_no_of_processes; i++){
+            var process = this._finished_jobs[i];
+            total_waiting_time += this.calcWaitingTime(process);
+        }
+        return total_waiting_time;
     }
 
     print(){
