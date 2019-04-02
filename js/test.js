@@ -26,6 +26,28 @@ function addProcess(){
     this.showAddedProcess(process);
 
     var schedule_btn = document.getElementById("schedule_btn");
+    schedule_btn.removeAttribute('disabled');
+    schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
+}
+
+function addTestDataSet(){
+    var p1 = new Process("p1", 0, 8);
+    var p2 = new Process("p2", 1, 4);
+    var p3 = new Process("p3", 2, 9);
+    var p4 = new Process("p4", 3, 5);
+
+    this.added_processes.push(p1);
+    this.added_processes.push(p2);
+    this.added_processes.push(p3);
+    this.added_processes.push(p4);
+
+    this.showAddedProcess(p1);
+    this.showAddedProcess(p2);
+    this.showAddedProcess(p3);
+    this.showAddedProcess(p4);
+
+    var schedule_btn = document.getElementById("schedule_btn");
+    schedule_btn.removeAttribute('disabled');
     schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
 }
 
@@ -47,6 +69,8 @@ function schedule(){
     this.addToUnreceivedJobs();
     this.makeProcessTable();
     scheduler.schedule();
+    this.showAvgTAT();
+    this.showAvgWaiting();
     this.displayLast();
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
@@ -89,6 +113,7 @@ function deleteAddedProcess(row){
     added_processes.splice(i - 1, 1);
     if(added_processes.length == 0){
         var schedule_btn = document.getElementById("schedule_btn");
+        schedule_btn.setAttribute('disabled', "");
         schedule_btn.setAttribute('class', "btn btn-primary btn-lg disabled");
     }
 }
@@ -119,3 +144,16 @@ function addToProcessTable(process){
 
     table.appendChild(tr);
 }
+
+function showAvgTAT(){
+    var element = document.getElementById("avg_tat");
+    var avg_tat = scheduler.calcAvgTurnaroundTime();
+    element.innerHTML = avg_tat;
+}
+
+function showAvgWaiting(){
+    var element = document.getElementById("avg_waiting");
+    var avg_waiting = scheduler.calcAvgWaitingTime();
+    element.innerHTML = avg_waiting;
+}
+

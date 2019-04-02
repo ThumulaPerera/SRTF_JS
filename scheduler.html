@@ -34,6 +34,8 @@
                     </form>
                     <br>                   
                     <button class="btn btn-secondary" onclick="addProcess()">add process</button>
+                    <br>
+                    <button class="btn btn-info" onclick="addTestDataSet()">add test data set</button>
                     
                 </div>
 
@@ -55,7 +57,7 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="schedule()">Schedule</button>
+                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="schedule()" disabled>Schedule</button>
                 </div>
             </div>
         </div>
@@ -91,8 +93,7 @@
                                         <div class="h3 col-2 align-self-center text-center">
                                             =
                                         </div>
-                                        <div class="h2 col-4 align-self-center text-center">
-                                            5
+                                        <div class="h2 col-4 align-self-center text-center" id="avg_waiting">
                                         </div>
                                     </div>
                                 </div>
@@ -108,8 +109,7 @@
                                         <div class="h3 col-2 align-self-center text-center">
                                             =
                                         </div>
-                                        <div class="h2 col-3 align-self-center text-center">
-                                            5
+                                        <div class="h2 col-3 align-self-center text-center" id="avg_tat">
                                         </div>
                                     </div>
                                 </div>

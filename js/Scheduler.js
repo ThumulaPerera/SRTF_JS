@@ -49,8 +49,22 @@ class Scheduler{
         }
     }
 
+    calcTurnaroundTime(process){
+        return process.getFinishTime() - process.getArrivalTime(); 
+    }
+
+    calcAvgTurnaroundTime(){
+        var total_turnaround_time = 0;
+        var total_no_of_processes = this._finished_jobs.length;
+        for(var i =0; i < total_no_of_processes; i++){
+            var process = this._finished_jobs[i];
+            total_turnaround_time += this.calcTurnaroundTime(process);
+        }
+        return total_turnaround_time/total_no_of_processes;
+    }
+
     calcWaitingTime(process){
-        return process.getFinishTime() - process.getArrivalTime() - process.getBurstTime()
+        return process.getFinishTime() - process.getArrivalTime() - process.getBurstTime();
     }
 
     calcAvgWaitingTime(){
@@ -60,7 +74,7 @@ class Scheduler{
             var process = this._finished_jobs[i];
             total_waiting_time += this.calcWaitingTime(process);
         }
-        return total_waiting_time;
+        return total_waiting_time/total_no_of_processes;
     }
 
     print(){
