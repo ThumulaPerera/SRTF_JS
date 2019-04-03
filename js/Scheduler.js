@@ -17,7 +17,11 @@ class Scheduler{
     }
 
     schedule(){
+        var empty_process = new Process("", 0, 0);
+        empty_process.setColor("white");
+
         var time = 0; 
+
         while ((!this._unreceived_jobs.isEmpty() || !this._schedule_queue.isEmpty())){
             
             while(!this._unreceived_jobs.isEmpty()){
@@ -43,6 +47,7 @@ class Scheduler{
                     this._finished_jobs.push(current_process);
                 }
             } else {
+                this._executing_order[time] = empty_process;
                 console.log((time + 1) + " no processes");
             }
             time += 1;
@@ -99,5 +104,9 @@ class Scheduler{
             var process = this._finished_jobs[i];
             document.write("waiting time for " + process.getName() + " " + this.calcWaitingTime(process) + "\n");
         }
+    }
+
+    getExecutingOrder(){
+        return this._executing_order;
     }
 }

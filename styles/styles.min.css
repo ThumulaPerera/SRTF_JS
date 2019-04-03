@@ -31,12 +31,26 @@ h3 {
 }
 
 .input-card{
-    padding: 50px;
-    width: 300px;
-    height: 490px;
+    padding: 2rem;
+    width: 20rem;
+    height: 30rem;
     margin: 0 auto;
 }
 
 .process-table{
     width: 400px;
+}
+
+.color-dot{
+    width: 1rem;
+    height: 1rem;
+}
+
+.chart-card{
+    height: 3rem;
+}
+
+.gantt-row{
+    margin-left: 1%;
+    margin-right: 1%;
 }

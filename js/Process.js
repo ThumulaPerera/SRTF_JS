@@ -4,6 +4,7 @@ class Process{
         this._burst_time = burst_time;
         this._remaining_time = burst_time;
         this._process_name = process_name;
+        this._color = getRandomColor();
     }
 
     getArrivalTime(){
@@ -26,11 +27,19 @@ class Process{
         return this._finish_time;
     }
 
+    getColor(){
+        return this._color;
+    }
+
     setRemainingTime(remaining_time){
         this._remaining_time = remaining_time;
     }
 
     setFinishTime(finish_time){
         this._finish_time = finish_time
+    }
+
+    setColor(color){
+        this._color = color;
     }
 }

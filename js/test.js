@@ -71,6 +71,7 @@ function schedule(){
     scheduler.schedule();
     this.showAvgTAT();
     this.showAvgWaiting();
+    this.drawGanttChart();
     this.displayLast();
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
@@ -86,6 +87,7 @@ function showAddedProcess(process){
     var td_process_name = document.createElement("td");
     var td_arrival_time = document.createElement("td");
     var td_burst_time = document.createElement("td");
+    var td_color = document.createElement("td");
     var td_delete_btn = document.createElement("td");
 
     var delete_btn = document.createElement("button");
@@ -99,9 +101,17 @@ function showAddedProcess(process){
     
     td_delete_btn.appendChild(delete_btn);
 
+    var dot = document.createElement("div");
+    dot.setAttribute('class', "rounded-circle color-dot");
+    dot.setAttribute('style', "background-color:" + process.getColor() + ";");
+
+    td_color.setAttribute('align', "center");
+    td_color.appendChild(dot);
+
     tr.appendChild(td_process_name);
     tr.appendChild(td_arrival_time);
     tr.appendChild(td_burst_time);
+    tr.appendChild(td_color);
     tr.appendChild(td_delete_btn);
 
     table.appendChild(tr);
@@ -130,6 +140,7 @@ function addToProcessTable(process){
 
     var tr = document.createElement("tr");
  
+    var td_color = document.createElement("td");
     var td_process_name = document.createElement("td");
     var td_arrival_time = document.createElement("td");
     var td_burst_time = document.createElement("td");
@@ -137,7 +148,15 @@ function addToProcessTable(process){
     td_process_name.innerText = process.getName();
     td_arrival_time.innerText = process.getArrivalTime();
     td_burst_time.innerText = process.getBurstTime();
+
+    var dot = document.createElement("div");
+    dot.setAttribute('class', "rounded-circle color-dot");
+    dot.setAttribute('style', "background-color:" + process.getColor() + ";");
+
+    td_color.setAttribute('align', "center");
+    td_color.appendChild(dot);
   
+    tr.appendChild(td_color);
     tr.appendChild(td_process_name);
     tr.appendChild(td_arrival_time);
     tr.appendChild(td_burst_time);
@@ -155,5 +174,80 @@ function showAvgWaiting(){
     var element = document.getElementById("avg_waiting");
     var avg_waiting = scheduler.calcAvgWaitingTime();
     element.innerHTML = avg_waiting;
+}
+
+function drawGanttChart(){
+    var chart_elements = scheduler.getExecutingOrder();
+    var chart = document.getElementById("gantt_chart");
+
+    var length = chart_elements.length;
+    var ele_length = (length > 30) ? 100/30 : 100/length;
+    console.log("ele_length " + ele_length);
+    
+    var no_of_rows = Math.ceil(length/30);
+    console.log("no of rows " + no_of_rows);
+
+
+    for(var i = 0; i < no_of_rows; i++){
+        var time_ele_length = this.getTimeEleLength(i, length);
+        console.log("time_length " + time_ele_length);
+
+        var chart_row = document.createElement("div");
+        chart_row.setAttribute('class', "row gantt-row");
+        chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
+
+        var time_row = document.createElement("div");
+        time_row.setAttribute('class', "row");
+        time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
+
+        var start_time = document.createElement("div");
+        start_time.setAttribute('style', "color: white;");
+        start_time.innerHTML = i * 30;
+
+        time_row.appendChild(start_time);
+
+        for(var j = i * 30; j < (i * 30) + 30; j++){
+            if(j < length){
+                addChartElement(chart_elements[j], chart_row, ele_length);
+                addChartElementTime(j + 1, time_row, time_ele_length);
+            }
+        }
+
+        chart.appendChild(chart_row);
+        chart.appendChild(time_row);
+    }
+}
+
+function addChartElement(process, row, ele_length){
+    var div = document.createElement("div");
+    div.setAttribute('style', "width: "+ ele_length +"%;");
+
+    var inner_div = document.createElement("div");
+    inner_div.setAttribute('class', "card chart-card");
+    inner_div.setAttribute('style', "background-color:"+ process.getColor() +";");
+
+    div.appendChild(inner_div);
+    row.appendChild(div);
+}
+
+function addChartElementTime(time, row, ele_length){
+    var div = document.createElement("div");
+    div.setAttribute('style', "width: "+ ele_length +"%; color: white; text-align: right;");
+    div.innerHTML = time;
+    
+    row.appendChild(div);
+}
+
+function getTimeEleLength(i, length){
+    if(i == 0 && length < 30){
+        return 98.8/length;
+    }
+    if(i == 0){
+        return 98.8/30;
+    }
+    if(i < 4){
+        return 98.1/30;
+    }
+    return 95/30;
 }
 
