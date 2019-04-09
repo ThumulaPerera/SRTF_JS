@@ -198,9 +198,6 @@ function drawGanttChart(){
 
 
     for(var i = 0; i < no_of_rows; i++){
-        var time_ele_length = this.getTimeEleLength(i, length);
-        console.log("time_length " + time_ele_length);
-
         var chart_row = document.createElement("div");
         chart_row.setAttribute('class', "row gantt-row");
         chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
@@ -209,16 +206,14 @@ function drawGanttChart(){
         time_row.setAttribute('class', "row");
         time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
 
-        var start_time = document.createElement("div");
-        start_time.setAttribute('style', "color: white;");
-        start_time.innerHTML = i * 30;
-
-        time_row.appendChild(start_time);
-
         for(var j = i * 30; j < (i * 30) + 30; j++){
             if(j < length){
                 addChartElement(chart_elements[j], chart_row, ele_length);
-                addChartElementTime(j + 1, time_row, time_ele_length);
+                if(j == 0){
+                    addChartStartingElementTime(j + 1, time_row, ele_length);
+                } else {
+                    addChartElementTime(j + 1, time_row, ele_length);
+                }
             }
         }
 
@@ -230,33 +225,49 @@ function drawGanttChart(){
 function addChartElement(process, row, ele_length){
     var div = document.createElement("div");
     div.setAttribute('style', "width: "+ ele_length +"%;");
-
+   
     var inner_div = document.createElement("div");
-    inner_div.setAttribute('class', "card chart-card");
-    inner_div.setAttribute('style', "background-color:"+ process.getColor() +";");
+    inner_div.setAttribute('class', "card chart-card center");
+    inner_div.setAttribute('style', "background-color:"+ process.getColor() + ";");
 
+    var p = document.createElement("p");
+    p.setAttribute('class', "center-p");
+    p.innerHTML = process.getName();
+
+    inner_div.appendChild(p);
     div.appendChild(inner_div);
     row.appendChild(div);
 }
 
 function addChartElementTime(time, row, ele_length){
-    var div = document.createElement("div");
-    div.setAttribute('style', "width: "+ ele_length +"%; color: white; text-align: right;");
-    div.innerHTML = time;
+    var main_div = document.createElement("div");
+    main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
     
-    row.appendChild(div);
+    var right_p = document.createElement("p");
+    right_p.setAttribute('class', "alignright");
+    right_p.innerHTML = time;
+
+    main_div.appendChild(right_p);
+    
+    row.appendChild(main_div);
 }
 
-function getTimeEleLength(i, length){
-    if(i == 0 && length < 30){
-        return 98.8/length;
-    }
-    if(i == 0){
-        return 98.8/30;
-    }
-    if(i < 4){
-        return 98.1/30;
-    }
-    return 95/30;
+function addChartStartingElementTime(time, row, ele_length){
+    var main_div = document.createElement("div");
+    main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
+    
+    var left_p = document.createElement("p");
+    left_p.setAttribute('class', "alignleft");
+    left_p.innerHTML = time - 1;
+
+    var right_p = document.createElement("p");
+    right_p.setAttribute('class', "alignright");
+    right_p.innerHTML = time;
+
+    main_div.appendChild(left_p);
+    main_div.appendChild(right_p);
+    
+    row.appendChild(main_div);
 }
+
 
