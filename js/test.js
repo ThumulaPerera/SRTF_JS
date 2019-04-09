@@ -30,7 +30,7 @@ function addProcess(){
     var schedule_btn = document.getElementById("schedule_btn");
     schedule_btn.removeAttribute('disabled');
 
-        schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
+    schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
 }
 
 function addTestDataSet(){
@@ -76,8 +76,8 @@ function displayFirst(){
 
 function schedule(){
     this.addToUnreceivedJobs();
-    this.makeProcessTable();
     scheduler.schedule();
+    this.makeProcessTable();
     this.showAvgTAT();
     this.showAvgWaiting();
     this.drawGanttChart();
@@ -145,6 +145,7 @@ function makeProcessTable(){
 
 function addToProcessTable(process){
     console.log("show added process running");
+    
     var table = document.getElementById("process_table");
 
     var tr = document.createElement("tr");
@@ -153,6 +154,7 @@ function addToProcessTable(process){
     var td_process_name = document.createElement("td");
     var td_arrival_time = document.createElement("td");
     var td_burst_time = document.createElement("td");
+    var td_info_button = document.createElement("td");
     
     td_process_name.innerText = process.getName();
     td_arrival_time.innerText = process.getArrivalTime();
@@ -164,11 +166,24 @@ function addToProcessTable(process){
 
     td_color.setAttribute('align', "center");
     td_color.appendChild(dot);
-  
+
+    var info_img = document.createElement("img");
+    info_img.setAttribute('src', "images/info.png");
+    info_img.setAttribute('class', "rounded-circle color-dot");
+
+    var info = document.createElement("button");
+    info.setAttribute('onclick', "showProcessInfo(\'" + process.getName() + "\'," + scheduler.calcTurnaroundTime(process) + "," + scheduler.calcWaitingTime(process) + ")");
+
+    info.appendChild(info_img);
+
+    td_info_button.setAttribute('align', "center");
+    td_info_button.appendChild(info);
+
     tr.appendChild(td_color);
     tr.appendChild(td_process_name);
     tr.appendChild(td_arrival_time);
     tr.appendChild(td_burst_time);
+    tr.appendChild(td_info_button);
 
     table.appendChild(tr);
 }
@@ -227,13 +242,18 @@ function addChartElement(process, row, ele_length){
     div.setAttribute('style', "width: "+ ele_length +"%;");
    
     var inner_div = document.createElement("div");
-    inner_div.setAttribute('class', "card chart-card center");
+    inner_div.setAttribute('class', "card chart-card");
     inner_div.setAttribute('style', "background-color:"+ process.getColor() + ";");
 
-    var p = document.createElement("p");
-    p.setAttribute('class', "center-p");
-    p.innerHTML = process.getName();
+    var p = document.createElement("span");
+    p.setAttribute('class', "tooltiptext");
 
+    if (process.getName() == ""){
+        p.innerHTML = "no process";
+    } else {
+        p.innerHTML = process.getName();
+    }
+   
     inner_div.appendChild(p);
     div.appendChild(inner_div);
     row.appendChild(div);
@@ -270,4 +290,22 @@ function addChartStartingElementTime(time, row, ele_length){
     row.appendChild(main_div);
 }
 
+function showProcessInfo(process_name, tat, waiting_time){
+    console.log("showProcessInfo works");
+    console.log(tat);
+    console.log(waiting_time);
+
+    var modal = document.getElementById('myModal');
+
+    var p_name = document.getElementById("modal_process_name");
+    p_name.innerHTML = process_name;
+
+    var p_tat = document.getElementById("modal_turnaround_time");
+    p_tat.innerHTML = "Turnaround time = " + tat;
+
+    var p_waiting = document.getElementById("modal_waiting_time");
+    p_waiting.innerHTML = "Waiting time = " + waiting_time;
+    
+    modal.style.display = "block";
+}
 
