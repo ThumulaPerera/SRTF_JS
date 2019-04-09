@@ -11,7 +11,9 @@
 // scheduler.Schedule();
 
 var scheduler = new Scheduler();
-var added_processes = []
+var added_processes = [];
+
+displayFirst();
 
 function addProcess(){
     console.log("test running");
@@ -27,10 +29,12 @@ function addProcess(){
 
     var schedule_btn = document.getElementById("schedule_btn");
     schedule_btn.removeAttribute('disabled');
-    schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
+
+        schedule_btn.setAttribute('class', "btn btn-primary btn-lg active");
 }
 
 function addTestDataSet(){
+
     var p1 = new Process("p1", 0, 8);
     var p2 = new Process("p2", 1, 4);
     var p3 = new Process("p3", 2, 9);
@@ -63,6 +67,11 @@ function addToUnreceivedJobs(){
 
 function displayLast(){
     document.getElementById("input_page").style.display = "none";
+    document.getElementById("results_page").style.display = "block";
+}
+
+function displayFirst(){
+    document.getElementById("results_page").style.display = "none";
 }
 
 function schedule(){
