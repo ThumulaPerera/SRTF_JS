@@ -172,7 +172,8 @@ function addToProcessTable(process){
     info_img.setAttribute('class', "rounded-circle color-dot");
 
     var info = document.createElement("button");
-    info.setAttribute('onclick', "showProcessInfo(\'" + process.getName() + "\'," + scheduler.calcTurnaroundTime(process) + "," + scheduler.calcWaitingTime(process) + ")");
+    console.log(process.getColor());
+    info.setAttribute('onclick', "showProcessInfo(\'" + process.getName() + "\'," + scheduler.calcTurnaroundTime(process) + "," + scheduler.calcWaitingTime(process) + "," + "\'" + process.getColor() + "\')");
 
     info.appendChild(info_img);
 
@@ -290,21 +291,31 @@ function addChartStartingElementTime(time, row, ele_length){
     row.appendChild(main_div);
 }
 
-function showProcessInfo(process_name, tat, waiting_time){
+function showProcessInfo(process_name, tat, waiting_time, process_color){
     console.log("showProcessInfo works");
     console.log(tat);
     console.log(waiting_time);
 
     var modal = document.getElementById('myModal');
+    var process_info_card = document.getElementById("process-info-card");
+    var process_info_inner_card = document.getElementById("process-info-inner-card");
+
+    process_info_inner_card.setAttribute('style', "background:" + process_color + ";");
+
+    if(isDark(hexToRgb(process_color))){
+        process_info_card.setAttribute('style', "color:white;");
+    }else{
+        process_info_card.setAttribute('style', "color:black;");
+    }
 
     var p_name = document.getElementById("modal_process_name");
     p_name.innerHTML = process_name;
 
     var p_tat = document.getElementById("modal_turnaround_time");
-    p_tat.innerHTML = "Turnaround time = " + tat;
+    p_tat.innerHTML = "Turnaround time : " + tat;
 
     var p_waiting = document.getElementById("modal_waiting_time");
-    p_waiting.innerHTML = "Waiting time = " + waiting_time;
+    p_waiting.innerHTML = "Waiting time : " + waiting_time;
     
     modal.style.display = "block";
 }
