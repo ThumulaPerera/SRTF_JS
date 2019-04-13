@@ -54,6 +54,42 @@
                 </div>
             </div>
         </div>
+ 
+        <div id="progress_page">
+            <div class="row mt-5">
+                <div class="column col-4">
+                    <h3>ADDED PROCESSES</h3>
+                    <br>
+                    <div class="pr-5 pl-5">
+                            <div class="p-3 card bg-dark text-center">
+                                <table class="table table-secondary table-sm" id="progress_process_table">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Color</th>
+                                            <th>Process Name</th>
+                                            <th>Arrival Time</th>
+                                            <th>Burst Time</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <div class="column col-8">
+                    <div class="text-center mt-5 mr-4 ml-4">
+                        <h3>GANTT CHART</h3>
+                        <div class="card bg-dark pr-3 pl-3">
+                            <div class="card-body" id="progress_gantt_chart">
+                                <!-- gantt chart goes here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="displayLast()">Schedule</button>
+
+        </div>
 
         <div id="results_page">
             <div class="row mt-5">
