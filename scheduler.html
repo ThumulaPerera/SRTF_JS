@@ -56,7 +56,7 @@
         </div>
 
         <div id="results_page">
-            <div class="row mt-5">
+            <div id="printable_area" class="row mt-5">
                 <div class="column col-4">
                     <h3>ADDED PROCESSES</h3>
                     <br>
@@ -121,6 +121,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="text-center p-5">
+                <button class="btn btn-primary" onclick="refresh()">RESET</button>
+                <button class="btn btn-primary" onclick="printDiv('printable_area')">PRINT</button>
             </div>
 
         </div>
