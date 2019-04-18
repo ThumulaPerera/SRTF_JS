@@ -12,6 +12,7 @@
 
 var scheduler = new Scheduler();
 var added_processes = [];
+var ele_length;
 
 displayFirst();
 
@@ -97,6 +98,8 @@ function schedule(){
     drawGanttChart();
 
     displayProgress();
+    animateProgressGanttChart()
+
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
 }
@@ -221,7 +224,7 @@ function drawGanttChart(){
     var chart = document.getElementById("gantt_chart");
 
     var length = chart_elements.length;
-    var ele_length = (length > 30) ? 100/30 : 100/length;
+    ele_length = (length > 30) ? 100/30 : 100/length;
     console.log("ele_length " + ele_length);
     
     var no_of_rows = Math.ceil(length/30);
@@ -231,11 +234,11 @@ function drawGanttChart(){
     for(var i = 0; i < no_of_rows; i++){
         var chart_row = document.createElement("div");
         chart_row.setAttribute('class', "row gantt-row");
-        chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
+        // chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
 
         var time_row = document.createElement("div");
         time_row.setAttribute('class', "row");
-        time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
+        // time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
 
         for(var j = i * 30; j < (i * 30) + 30; j++){
             if(j < length){
@@ -253,7 +256,7 @@ function drawGanttChart(){
     }
 }
 
-function addChartElement(process, row, ele_length){
+function addChartElement(process, row, ele_length, ele_number){
     var div = document.createElement("div");
     div.setAttribute('style', "width: "+ ele_length +"%;");
    
@@ -275,7 +278,7 @@ function addChartElement(process, row, ele_length){
     row.appendChild(div);
 }
 
-function addChartElementTime(time, row, ele_length){
+function addChartElementTime(time, row, ele_length, ele_number){
     var main_div = document.createElement("div");
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
     
@@ -288,7 +291,7 @@ function addChartElementTime(time, row, ele_length){
     row.appendChild(main_div);
 }
 
-function addChartStartingElementTime(time, row, ele_length){
+function addChartStartingElementTime(time, row, ele_length, ele_number){
     var main_div = document.createElement("div");
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
     
@@ -335,7 +338,6 @@ function showProcessInfo(process_name, tat, waiting_time, process_color){
     modal.style.display = "block";
 }
 
-<<<<<<< HEAD
 function refresh(){
     location.reload();
 }
@@ -349,7 +351,8 @@ function printDiv(divName) {
     window.print();
 
     document.body.innerHTML = originalContents;
-=======
+}
+
 function makeProgressProcessTable(){
     for(var i = 0; i < this.added_processes.length; i++){
         this.addToProgressProcessTable(this.added_processes[i]);
@@ -392,7 +395,7 @@ function drawProgressGanttChart(){
     var chart = document.getElementById("progress_gantt_chart");
 
     var length = chart_elements.length;
-    var ele_length = (length > 30) ? 100/30 : 100/length;
+    ele_length = (length > 30) ? 100/30 : 100/length;
     console.log("ele_length " + ele_length);
     
     var no_of_rows = Math.ceil(length/30);
@@ -402,29 +405,133 @@ function drawProgressGanttChart(){
     for(var i = 0; i < no_of_rows; i++){
         var chart_row = document.createElement("div");
         chart_row.setAttribute('class', "row gantt-row");
+        chart_row.setAttribute('style', "opacity:0.0;");
         chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
+        
 
         var time_row = document.createElement("div");
         time_row.setAttribute('class', "row");
+        //time_row.setAttribute('style', "opacity:0.0;");
         time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
 
         for(var j = i * 30; j < (i * 30) + 30; j++){
-            
-                //your code to be executed after 1 second
-            setTimeout(function() {
                 if(j < length){
-                    addChartElement(chart_elements[j], chart_row, ele_length);
+                    addProgressChartElement(chart_elements[j], chart_row, ele_length, j);
                     if(j == 0){
-                        addChartStartingElementTime(j + 1, time_row, ele_length);
+                        addProgressChartStartingElementTime(j + 1, time_row, ele_length, j);
                     } else {
-                        addChartElementTime(j + 1, time_row, ele_length);
+                        addProgressChartElementTime(j + 1, time_row, ele_length, j);
                     }
                 }
                 chart.appendChild(chart_row);
                 chart.appendChild(time_row);
-            }, 2000) ;
-         }
+        }
     }
->>>>>>> 1b1cf46ad83d24da7545ab8aea4f281386f6de87
+}
+
+function addProgressChartElement(process, row, ele_length, ele_number){
+    var div = document.createElement("div");
+    div.setAttribute('id', "chart_ele_" + ele_number);
+    div.setAttribute('style', "width:0;");
+   
+    var inner_div = document.createElement("div");
+    inner_div.setAttribute('class', "card chart-card");
+    inner_div.setAttribute('style', "background-color:"+ process.getColor() + ";");
+
+    var p = document.createElement("span");
+    p.setAttribute('class', "tooltiptext");
+
+    if (process.getName() == ""){
+        p.innerHTML = "no process";
+    } else {
+        p.innerHTML = process.getName();
+    }
+   
+    inner_div.appendChild(p);
+    div.appendChild(inner_div);
+    row.appendChild(div);
+}
+
+function addProgressChartElementTime(time, row, ele_length, ele_number){
+    var main_div = document.createElement("div");
+    main_div.setAttribute('id', "time_ele_" + ele_number);
+    main_div.setAttribute('style', "width: "+ ele_length +"%; color: white; opacity:0.0;");
+    
+    var right_p = document.createElement("p");
+    right_p.setAttribute('class', "alignright");
+    right_p.innerHTML = time;
+
+    main_div.appendChild(right_p);
+    
+    row.appendChild(main_div);
+}
+
+function addProgressChartStartingElementTime(time, row, ele_length, ele_number){
+    var main_div = document.createElement("div");
+    main_div.setAttribute('id', "time_ele_" + ele_number);
+    main_div.setAttribute('style', "width: "+ ele_length +"%; color: white; opacity:0.0;");
+    
+    var left_p = document.createElement("p");
+    left_p.setAttribute('class', "alignleft");
+    left_p.innerHTML = time - 1;
+
+    var right_p = document.createElement("p");
+    right_p.setAttribute('class', "alignright");
+    right_p.innerHTML = time;
+
+    main_div.appendChild(left_p);
+    main_div.appendChild(right_p);
+    
+    row.appendChild(main_div);
+}
+
+function animateProgressGanttChart(){
+    var chart_elements = scheduler.getExecutingOrder();
+    var length = chart_elements.length;
+    console.log("animating gantt chart");
+    console.log("no of cards = " + length);
+
+    for (var i = 0; i < length; i++){
+
+        if(i % 30 == 0){
+            console.log("adding row");
+            var row_no = i / 30;
+            var chart_row_id = "#gantt_chart_".concat(row_no);
+            var time_row_id = "gantt_time_".concat(row_no);
+
+            animateChartRow(chart_row_id,i*1000);
+            animateTimeRow(time_row_id,i*1000);
+        }
+        
+        var card_id = "#chart_ele_".concat(i);
+        var time_id = "#time_ele_".concat(i);
+
+        animateChartElement(card_id,i*1000);
+        animateTimeElement(time_id,i*1000);
+    }
+}
+
+function animateChartElement(id, delay){
+    console.log("animating" + id);
+    var card = $(id);
+    card.delay(delay).animate({width:ele_length+"%"});
+}
+
+function animateTimeElement(id, delay){
+    console.log("animating" + id);
+    var time = $(id);
+    time.delay(delay).animate({opacity:1.0});
+}
+
+function animateChartRow(id,delay){
+    console.log("animating" + id + " delay " + delay);
+    var chart_row = $(id);
+    chart_row.delay(delay).animate({opacity:1.0});
+}
+
+function animateTimeRow(id,delay){
+    console.log("animating" + id + " delay " + delay);
+    var time_row = $(id);
+    time_row.delay(delay).animate({opacity:1.0});
 }
 
