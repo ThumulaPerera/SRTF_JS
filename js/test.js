@@ -65,23 +65,38 @@ function addToUnreceivedJobs(){
     }
 }
 
-function displayLast(){
-    document.getElementById("input_page").style.display = "none";
-    document.getElementById("results_page").style.display = "block";
+function displayFirst(){
+    document.getElementById("results_page").style.display = "none";
+    document.getElementById("progress_page").style.display = "none";
 }
 
-function displayFirst(){
+function displayProgress(){
+    document.getElementById("input_page").style.display = "none";
+    document.getElementById("progress_page").style.display = "block";
     document.getElementById("results_page").style.display = "none";
 }
 
+function displayLast(){
+    document.getElementById("input_page").style.display = "none";
+    document.getElementById("progress_page").style.display = "none";
+    document.getElementById("results_page").style.display = "block";
+}
+
+
+
 function schedule(){
-    this.addToUnreceivedJobs();
+    addToUnreceivedJobs();
     scheduler.schedule();
-    this.makeProcessTable();
-    this.showAvgTAT();
-    this.showAvgWaiting();
-    this.drawGanttChart();
-    this.displayLast();
+    
+    makeProgressProcessTable();
+    drawProgressGanttChart();
+
+    makeProcessTable();
+    showAvgTAT();
+    showAvgWaiting();
+    drawGanttChart();
+
+    displayProgress();
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
 }
@@ -320,6 +335,7 @@ function showProcessInfo(process_name, tat, waiting_time, process_color){
     modal.style.display = "block";
 }
 
+<<<<<<< HEAD
 function refresh(){
     location.reload();
 }
@@ -333,5 +349,82 @@ function printDiv(divName) {
     window.print();
 
     document.body.innerHTML = originalContents;
+=======
+function makeProgressProcessTable(){
+    for(var i = 0; i < this.added_processes.length; i++){
+        this.addToProgressProcessTable(this.added_processes[i]);
+    }
+}
+
+function addToProgressProcessTable(process){
+    console.log("add to progress process table running");
+    
+    var table = document.getElementById("progress_process_table");
+
+    var tr = document.createElement("tr");
+ 
+    var td_color = document.createElement("td");
+    var td_process_name = document.createElement("td");
+    var td_arrival_time = document.createElement("td");
+    var td_burst_time = document.createElement("td");
+    
+    td_process_name.innerText = process.getName();
+    td_arrival_time.innerText = process.getArrivalTime();
+    td_burst_time.innerText = process.getBurstTime();
+
+    var dot = document.createElement("div");
+    dot.setAttribute('class', "rounded-circle color-dot");
+    dot.setAttribute('style', "background-color:" + process.getColor() + ";");
+
+    td_color.setAttribute('align', "center");
+    td_color.appendChild(dot);
+
+    tr.appendChild(td_color);
+    tr.appendChild(td_process_name);
+    tr.appendChild(td_arrival_time);
+    tr.appendChild(td_burst_time);
+
+    table.appendChild(tr);
+}
+
+function drawProgressGanttChart(){
+    var chart_elements = scheduler.getExecutingOrder();
+    var chart = document.getElementById("progress_gantt_chart");
+
+    var length = chart_elements.length;
+    var ele_length = (length > 30) ? 100/30 : 100/length;
+    console.log("ele_length " + ele_length);
+    
+    var no_of_rows = Math.ceil(length/30);
+    console.log("no of rows " + no_of_rows);
+
+
+    for(var i = 0; i < no_of_rows; i++){
+        var chart_row = document.createElement("div");
+        chart_row.setAttribute('class', "row gantt-row");
+        chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
+
+        var time_row = document.createElement("div");
+        time_row.setAttribute('class', "row");
+        time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
+
+        for(var j = i * 30; j < (i * 30) + 30; j++){
+            
+                //your code to be executed after 1 second
+            setTimeout(function() {
+                if(j < length){
+                    addChartElement(chart_elements[j], chart_row, ele_length);
+                    if(j == 0){
+                        addChartStartingElementTime(j + 1, time_row, ele_length);
+                    } else {
+                        addChartElementTime(j + 1, time_row, ele_length);
+                    }
+                }
+                chart.appendChild(chart_row);
+                chart.appendChild(time_row);
+            }, 2000) ;
+         }
+    }
+>>>>>>> 1b1cf46ad83d24da7545ab8aea4f281386f6de87
 }
 
