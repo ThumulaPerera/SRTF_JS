@@ -13,6 +13,7 @@
 var scheduler = new Scheduler();
 var added_processes = [];
 var ele_length;
+var const_delay=2000;
 
 displayFirst();
 
@@ -91,6 +92,7 @@ function schedule(){
     
     makeProgressProcessTable();
     drawProgressGanttChart();
+    showReadyQueue();
 
     makeProcessTable();
     showAvgTAT();
@@ -343,15 +345,26 @@ function refresh(){
     location.reload();
 }
 
-function printDiv(divName) {
-    var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
+function printPage() {
+    var process_table_main = document.getElementById("process_table_main");
+    process_table_main.classList.remove("column");
+    process_table_main.classList.remove("col-4");
+    process_table_main.setAttribute('style', "width:100%;");
 
-    document.body.innerHTML = printContents;
+    var gantt_chart_main = document.getElementById("gantt_chart_main");
+    gantt_chart_main.setAttribute('class', "mt-5");
+    gantt_chart_main.setAttribute('style', "width:100%;");
+
+    $("#reset_btn").hide();
+    $("#print_btn").hide();
 
     window.print();
 
-    document.body.innerHTML = originalContents;
+    process_table_main.setAttribute('class', "column col-4");
+    gantt_chart_main.setAttribute('class', "column col-8");
+
+    $("#reset_btn").show();
+    $("#print_btn").show();
 }
 
 function makeProgressProcessTable(){
@@ -500,15 +513,15 @@ function animateProgressGanttChart(){
             var chart_row_id = "#gantt_chart_".concat(row_no);
             var time_row_id = "gantt_time_".concat(row_no);
 
-            animateChartRow(chart_row_id,i*1000);
-            animateTimeRow(time_row_id,i*1000);
+            animateChartRow(chart_row_id,i*const_delay);
+            animateTimeRow(time_row_id,i*const_delay);
         }
         
         var card_id = "#chart_ele_".concat(i);
         var time_id = "#time_ele_".concat(i);
 
-        animateChartElement(card_id,i*1000);
-        animateTimeElement(time_id,i*1000);
+        animateChartElement(card_id,i*const_delay);
+        animateTimeElement(time_id,i*const_delay);
     }
 }
 
@@ -569,7 +582,7 @@ function showCurrentProcess(){
 
     for(var i = 0; i < executing_order.length; i++){
         var current_process_id = "#current_process_card_".concat(i);
-        animateCurrentProcess(current_process_id, i * 1000);
+        animateCurrentProcess(current_process_id, i * const_delay);
     }
 }
 
@@ -577,7 +590,87 @@ function animateCurrentProcess(id, delay){
     console.log("animating current process");
 
     var current_process_id = $(id);
-    current_process_id.delay(delay).fadeToggle(100);
-    current_process_id.delay(800).fadeToggle(100);
+    current_process_id.delay(delay).fadeToggle(const_delay/10);
+    current_process_id.delay(const_delay*8/10).fadeToggle(const_delay/10);
+}
+
+function showReadyQueue(){
+    
+    var ready_queue = scheduler.getReadyQueue();
+    //console.log(ready_queue);
+    var main_div = document.getElementById("ready_queue");
+    var max_ready_queue_length = 0;
+
+    for(var i=0; i < ready_queue.length; i++){
+        var current_ready_queue_length = ready_queue[i].length;
+
+        if(current_ready_queue_length > max_ready_queue_length){
+            max_ready_queue_length = current_ready_queue_length
+        }
+    }
+
+    for(var i=0; i < ready_queue.length; i++){
+        var outer_div = document.createElement("div");
+        outer_div.setAttribute('class', "ready-queue-row");
+        outer_div.setAttribute('id', "ready_queue_row_".concat(i));
+        for(var j=0; j < ready_queue[i].length; j++){
+            addReadyQueueElement(ready_queue[i][j], outer_div, 100/max_ready_queue_length);
+        }
+        main_div.appendChild(outer_div);
+
+        var ready_queue_row_id = $("#ready_queue_row_".concat(i));
+        ready_queue_row_id.hide();
+    }
+
+    for(var i = 0; i < ready_queue.length; i++){
+        var ready_queue_row_id = "#ready_queue_row_".concat(i);
+        animateCurrentProcess(ready_queue_row_id, i * const_delay);
+    }
+
+}
+
+function addReadyQueueElement(process, outer_div, width){
+    var div_width = width;
+    if (div_width>20){
+        div_width=20;
+    }
+
+    var div = document.createElement("div");
+    //div.setAttribute('id', "chart_ele_" + ele_number);
+    div.setAttribute('style', "width:" + div_width + "%;");
+    div.setAttribute('class', "ready-queue-process");
+   
+    var inner_div = document.createElement("div");
+    inner_div.setAttribute('class', "card chart-card");
+    inner_div.setAttribute('style', "background-color:"+ process.getColor() + ";");
+    if(div_width > 10){
+        var name_div = document.createElement("div");
+        name_div.innerHTML = process.getName();
+        name_div.setAttribute('class', "ready-queue-name");
+        
+        if(isDark(hexToRgb(process.getColor()))){
+            name_div.setAttribute('style', "color:white;");
+        }else{
+            name_div.setAttribute('style', "color:black;");
+        }
+
+        inner_div.appendChild(name_div);
+    }
+
+    var p = document.createElement("span");
+    p.setAttribute('class', "tooltiptext");
+    p.innerHTML = process.getName();
+       
+    inner_div.appendChild(p);
+    div.appendChild(inner_div);
+    outer_div.appendChild(div);
+}
+
+function animateReadyQueueRow(id, delay){
+    console.log("animating current process");
+
+    var current_process_id = $(id);
+    current_process_id.delay(delay).fadeToggle(const_delay/10);
+    current_process_id.delay(const_delay*8/10).fadeToggle(const_delay/10);
 }
 

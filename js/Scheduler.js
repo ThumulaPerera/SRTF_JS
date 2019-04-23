@@ -4,6 +4,7 @@ class Scheduler{
         this._schedule_queue = new PQueue();
         this._finished_jobs = [];
         this._executing_order = [];
+        this._ready_queue = [];
     }
 
     addUnreceivedJobs(params) {
@@ -35,6 +36,24 @@ class Scheduler{
                 }
             }
 
+            console.log("before");
+            console.log(this._schedule_queue);
+            var temp_ready_queue = [];
+            while(!this._schedule_queue.isEmpty()){
+                var ready_process = this._schedule_queue.dequeue().element;
+                temp_ready_queue.push(ready_process);
+            }
+            
+            for(var i=0; i < temp_ready_queue.length; i++){
+                this._schedule_queue.enqueue(temp_ready_queue[i], temp_ready_queue[i].getRemainingTime());
+            }
+
+            temp_ready_queue.shift();
+            this._ready_queue[time] = temp_ready_queue;
+            console.log("after");
+            console.log(this._schedule_queue);
+
+            
             if(!this._schedule_queue.isEmpty()){
                 var current_process = this._schedule_queue.dequeue().element;
                 console.log((time + 1) + " " + current_process.getName());
@@ -108,5 +127,9 @@ class Scheduler{
 
     getExecutingOrder(){
         return this._executing_order;
+    }
+
+    getReadyQueue(){
+        return this._ready_queue;
     }
 }

@@ -162,3 +162,21 @@ h3 {
     line-height: 70px;
   }
 
+  .ready-queue-row{
+      width: 100%;
+      padding: 2rem;
+   }
+
+  .ready-queue-process{
+    display: inline-block;
+    float: left;
+  }
+
+  .ready-queue-name{
+      line-height: 2.5rem;
+  }
+
+  
+
+ 
+
