@@ -18,7 +18,7 @@ class Scheduler{
 
     schedule(){
         var empty_process = new Process("", 0, 0);
-        empty_process.setColor("white");
+        empty_process.setColor("#FFFFFF");
 
         var time = 0; 
 

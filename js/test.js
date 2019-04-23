@@ -98,7 +98,8 @@ function schedule(){
     drawGanttChart();
 
     displayProgress();
-    animateProgressGanttChart()
+    animateProgressGanttChart();
+    showCurrentProcess();
 
     // scheduler.printOrder();
     // scheduler.printWaitingTimes();
@@ -533,5 +534,50 @@ function animateTimeRow(id,delay){
     console.log("animating" + id + " delay " + delay);
     var time_row = $(id);
     time_row.delay(delay).animate({opacity:1.0});
+}
+
+function showCurrentProcess(){
+    var executing_order = scheduler.getExecutingOrder();
+    var main_div = document.getElementById("current_process");
+
+    for (var i = 0; i < executing_order.length; i++){
+        var process_name = executing_order[i].getName();
+        var process_color = executing_order[i].getColor();
+
+        var process_card_wrap = document.createElement("div");
+        var process_card = document.createElement("div");
+        
+        process_card_wrap.setAttribute('class', "current-process-wrap h4 mt-2");
+        process_card_wrap.setAttribute('id',"current_process_card_".concat(i));
+
+        process_card.setAttribute('class', "card current-process");
+        process_card.setAttribute('style', "background:"+ process_color + ";");
+        process_card.innerHTML = process_name;
+
+        if(isDark(hexToRgb(process_color))){
+            process_card_wrap.setAttribute('style', "color:white;");
+        }else{
+            process_card_wrap.setAttribute('style', "color:black;");
+        }
+
+        process_card_wrap.appendChild(process_card)
+        main_div.appendChild(process_card_wrap);
+
+        var current_process_id = $("#current_process_card_".concat(i));
+        current_process_id.hide();
+    }
+
+    for(var i = 0; i < executing_order.length; i++){
+        var current_process_id = "#current_process_card_".concat(i);
+        animateCurrentProcess(current_process_id, i * 1000);
+    }
+}
+
+function animateCurrentProcess(id, delay){
+    console.log("animating current process");
+
+    var current_process_id = $(id);
+    current_process_id.delay(delay).fadeToggle(100);
+    current_process_id.delay(800).fadeToggle(100);
 }
 

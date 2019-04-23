@@ -147,3 +147,18 @@ h3 {
       color: aqua;
   }
 
+  .current-process-main{
+      height: 200px;
+  }
+
+  .current-process-wrap{
+      width: 100%;
+      height: 80px;
+  }
+
+  .current-process{
+    width: 100%;
+    height: 100%;
+    line-height: 70px;
+  }
+
