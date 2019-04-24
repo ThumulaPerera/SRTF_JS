@@ -13,7 +13,7 @@
 var scheduler = new Scheduler();
 var added_processes = [];
 var ele_length;
-var const_delay=2000;
+var const_delay=2;
 
 displayFirst();
 
@@ -286,7 +286,7 @@ function addChartElementTime(time, row, ele_length, ele_number){
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
     
     var right_p = document.createElement("p");
-    right_p.setAttribute('class', "alignright");
+    right_p.setAttribute('class', "alignright gantt-text");
     right_p.innerHTML = time;
 
     main_div.appendChild(right_p);
@@ -299,11 +299,11 @@ function addChartStartingElementTime(time, row, ele_length, ele_number){
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white;");
     
     var left_p = document.createElement("p");
-    left_p.setAttribute('class', "alignleft");
+    left_p.setAttribute('class', "alignleft gantt-text");
     left_p.innerHTML = time - 1;
 
     var right_p = document.createElement("p");
-    right_p.setAttribute('class', "alignright");
+    right_p.setAttribute('class', "alignright gantt-text");
     right_p.innerHTML = time;
 
     main_div.appendChild(left_p);
@@ -347,21 +347,19 @@ function refresh(){
 
 function printPage() {
     var process_table_main = document.getElementById("process_table_main");
-    process_table_main.classList.remove("column");
-    process_table_main.classList.remove("col-4");
-    process_table_main.setAttribute('style', "width:100%;");
+    process_table_main.classList.remove("column-wide");
+    process_table_main.classList.remove("left-4");
 
     var gantt_chart_main = document.getElementById("gantt_chart_main");
     gantt_chart_main.setAttribute('class', "mt-5");
-    gantt_chart_main.setAttribute('style', "width:100%;");
 
     $("#reset_btn").hide();
     $("#print_btn").hide();
 
     window.print();
 
-    process_table_main.setAttribute('class', "column col-4");
-    gantt_chart_main.setAttribute('class', "column col-8");
+    process_table_main.setAttribute('class', "column-wide left-4");
+    gantt_chart_main.setAttribute('class', "column-wide right-8");
 
     $("#reset_btn").show();
     $("#print_btn").show();
@@ -472,7 +470,7 @@ function addProgressChartElementTime(time, row, ele_length, ele_number){
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white; opacity:0.0;");
     
     var right_p = document.createElement("p");
-    right_p.setAttribute('class', "alignright");
+    right_p.setAttribute('class', "alignright gantt-text");
     right_p.innerHTML = time;
 
     main_div.appendChild(right_p);
@@ -486,11 +484,11 @@ function addProgressChartStartingElementTime(time, row, ele_length, ele_number){
     main_div.setAttribute('style', "width: "+ ele_length +"%; color: white; opacity:0.0;");
     
     var left_p = document.createElement("p");
-    left_p.setAttribute('class', "alignleft");
+    left_p.setAttribute('class', "alignleft gantt-text");
     left_p.innerHTML = time - 1;
 
     var right_p = document.createElement("p");
-    right_p.setAttribute('class', "alignright");
+    right_p.setAttribute('class', "alignright gantt-text");
     right_p.innerHTML = time;
 
     main_div.appendChild(left_p);

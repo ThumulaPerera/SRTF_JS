@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Scheduler</title>
+        <title>SRTF Scheduler</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="styles/styles.min.css">
         <link rel="stylesheet" href="styles/bootstrap.min.css">
@@ -52,14 +52,14 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="schedule()" disabled>Schedule</button>
+                    <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="schedule()" disabled>SCHEDULE</button>
                 </div>
             </div>
         </div>
  
         <div id="progress_page">
             <div class="row mt-5">
-                <div class="column col-4">
+                <div class="column-wide left-4">
                     <h3 style="color:white;">ADDED PROCESSES</h3>
                     <br>
                     <div class="pr-5 pl-5">
@@ -77,9 +77,9 @@
                             </div>
                         </div>
                 </div>
-                <div class="column col-8">
+                <div class="column-wide right-8">
                     <div class="row">
-                        <div class="column col-3 p-3 pl-5">
+                        <div class="column left-3 p-3 pl-5">
                             <div class="card bg-light current-process-main text-center">
                                 <div class="card-body">
                                     <div id="current_process" class="row align-self-center">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="column col-9 p-3 pr-5">
+                        <div class="column right-9 p-3 pr-5">
                             <div class="card bg-light current-process-main text-center">
                                 <div class="card-body">
                                     <div id="ready_queue" class="row align-self-center">
@@ -112,14 +112,16 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <button class="btn btn-primary btn-lg disabled" id="schedule_btn" onclick="displayLast()">Schedule</button>
+            <div class="text-center p-5">
+                <button class="btn btn-primary btn-lg" id="schedule_btn" onclick="displayLast()">RESULTS</button>
+            </div>
+            
 
         </div>
 
         <div id="results_page">
             <div id="printable_area" class="row mt-5">
-                <div id="process_table_main" class="column col-4">
+                <div id="process_table_main" class="column-wide left-4">
                     <h3 class="printable-white-text">ADDED PROCESSES</h3>
                     <br>
                     <div class="pr-5 pl-5 printable">
@@ -138,35 +140,35 @@
                             </div>
                         </div>
                 </div>
-                <div id="gantt_chart_main" class="column col-8">
+                <div id="gantt_chart_main" class="column-wide right-8">
                     <div class="row">
-                        <div class="col pl-5 pr-5">
+                        <div class="left-6">
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="h3 col-6 align-self-center text-center">
+                                        <div class="h3 col-6 align-self-center text-center time-text">
                                             Avg. waiting time
                                         </div>
-                                        <div class="h3 col-2 align-self-center text-center">
+                                        <div class="h3 col-2 align-self-center text-center time-text">
                                             =
                                         </div>
-                                        <div class="h2 col-4 align-self-center text-center" id="avg_waiting">
+                                        <div class="h2 col-4 align-self-center text-center time-text" id="avg_waiting">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col pl-5 pr-5">
+                        <div class="right-6">
                             <div class="card bg-light">
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="h3 col-7 align-self-center text-center">
+                                        <div class="h3 col-7 align-self-center text-center time-text">
                                             Avg. turnaround time
                                         </div>
-                                        <div class="h3 col-2 align-self-center text-center">
+                                        <div class="h3 col-2 align-self-center text-center time-text">
                                             =
                                         </div>
-                                        <div class="h2 col-3 align-self-center text-center" id="avg_tat">
+                                        <div class="h2 col-3 align-self-center text-center time-text" id="avg_tat">
                                         </div>
                                     </div>
                                 </div>
@@ -185,8 +187,8 @@
                 </div>
             </div>
             <div class="text-center p-5">
-                <button id="reset_btn" class="btn btn-primary" onclick="refresh()">RESET</button>
-                <button id="print_btn" class="btn btn-primary" onclick="printPage()">PRINT</button>
+                <button id="print_btn" class="btn btn-primary btn-lg" onclick="printPage()">PRINT RESULTS</button>
+                <button id="reset_btn" class="btn btn-warning btn-lg" onclick="refresh()">RESET</button>
             </div>
 
         </div>

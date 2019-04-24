@@ -14,12 +14,44 @@ h3 {
     float: left;
 }
 
+.column-wide{
+    float: left;
+}
+
 .left{
     width: 40%;
 }
 
 .right{
     width: 60%;
+}
+
+.left-4{
+    width: 33%;
+}
+
+.right-8{
+    width: 67%;
+}
+
+.left-3{
+    width: 25%;
+}
+
+.right-9{
+    width: 75%;
+}
+
+.left-6{
+    width: 50%;
+    padding-left: 4rem;
+    padding-right: 4rem;
+}
+
+.right-6{
+    width: 50%;
+    padding-left: 4rem;
+    padding-right: 4rem;
 }
 
 .row:after{
@@ -31,6 +63,42 @@ h3 {
 @media screen and (max-width: 600px){
     .column{
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .left-3{
+        width: 45%;
+    }
+
+    .right-9{
+        width: 55%;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .column-wide{
+        width: 100%;
+    }
+
+    .left-6{
+        width: 50%;
+        margin-top: 4rem;
+        padding-left: 2.5rem;
+        padding-right: 0.5rem;
+    }
+    
+    .right-6{
+        width: 50%;
+        margin-top: 4rem;
+        padding-left: 0.5rem;
+        padding-right: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .time-text{
+        font-size: 1rem !important;
     }
 }
 
@@ -66,6 +134,22 @@ h3 {
 
 .alignright {
 	float: right;
+}
+
+.gantt-text{
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 900px){
+    .gantt-text{
+        font-size: .8rem;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .gantt-text{
+        font-size: .6rem;
+    }
 }
 
   /* hovering */
@@ -148,8 +232,14 @@ h3 {
   .process-info-card{
       width: 20%;
       margin: auto;
-      color: aqua;
   }
+
+  @media screen and (max-width: 950px){
+    .process-info-card{
+        width: 45%;
+    }
+}
+
 
   .current-process-main{
       height: 200px;
