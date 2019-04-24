@@ -151,6 +151,10 @@ function deleteAddedProcess(row){
     var i = row.parentNode.parentNode.rowIndex;
     document.getElementById("process_list").deleteRow(i);
     added_processes.splice(i - 1, 1);
+
+    //for validation
+    addProcessVerify();
+
     if(added_processes.length == 0){
         var schedule_btn = document.getElementById("schedule_btn");
         schedule_btn.setAttribute('disabled', "");

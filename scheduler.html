@@ -11,23 +11,27 @@
         <div id="input_page">
             <div class="row">
                 <div class="column left mt-5 input-card card text-white bg-dark">
-                    <form>
+                    <form name="input_form">
                         <h3>ADD PROCESS</h3>
                         <div class="form-group">
                             <label for="process_name_input">Process Name: </label>
-                            <input type="text" class="form-ccontrol input" id="process_name_input" name="process_name"><br>
+                            <input type="text" class="form-ccontrol input" id="process_name_input" name="process_name">
+                            <div id="name_error" class="val-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="arrival_time_input">Arrival Time: </label>
-                            <input type="number" class="form-ccontrol input" id="arrival_time_input" name="arrival_time"><br>
+                            <input type="number" class="form-ccontrol input" id="arrival_time_input" name="arrival_time">
+                            <div id="arrival_time_error" class="val-error"></div>
                         </div>
                         <div class="form-group">
                             <label for="burst_time_input">Burst Time: </label>
-                            <input type="number" class="form-ccontrol input" id="burst_time_input" name="burst_time"><br>
+                            <input type="number" class="form-ccontrol input" id="burst_time_input" name="burst_time">
+                            <div id="burst_time_error" class="val-error"></div>
                         </div>
                     </form>
                     <br>                   
-                    <button class="btn btn-secondary" onclick="addProcess()">add process</button>
+                    <button class="btn btn-secondary" onclick="validate()">add process</button>
+                    <div id="general_error" class="val-error"></div>
                     <br>
                     <button class="btn btn-info" onclick="addTestDataSet()">add test data set</button>
                     
@@ -245,4 +249,5 @@
     <script src="js/PQueue.js"></script>
     <script src="js/Scheduler.js"></script>
     <script src="js/test.js"></script>
+    <script src="js/validator.js"></script>
 </html>
