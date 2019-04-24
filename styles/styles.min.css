@@ -1,3 +1,7 @@
+body{
+    background-color: #23272A !important;
+}
+
 h3 {
     text-align: center;
 }
@@ -176,7 +180,18 @@ h3 {
       line-height: 2.5rem;
   }
 
-  
+  .printable-white-text{
+      color: white;
+  }
+
+  @media print{
+    body{
+        background-color: #FFFFFF !important;
+    }
+    .printable-white-text{
+        color: black;
+    }
+  }
 
  
 
