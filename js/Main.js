@@ -1,19 +1,7 @@
-// var p1 = new Process(0, 5, "p1");
-// var p2 = new Process(1, 3, "p2");
-// var p3 = new Process(2, 10, "p3");
-// var p4 = new Process(5, 1, "p4");
-// var p5 = new Process(3, 15, "p5");
-// var p6 = new Process(1, 6, "p6");
-// var p7 = new Process(25, 4, "p7");
-// var p8 = new Process(50, 3, "p8");
-// var scheduler = new Scheduler();
-// scheduler.addUnreceivedJobs(p1,p2,p3,p4,p5,p6,p7,p8);
-// scheduler.Schedule();
-
 var scheduler = new Scheduler();
 var added_processes = [];
 var ele_length;
-var const_delay=2;
+var const_delay=2000;
 
 displayFirst();
 
@@ -102,13 +90,9 @@ function schedule(){
     displayProgress();
     animateProgressGanttChart();
     showCurrentProcess();
-
-    // scheduler.printOrder();
-    // scheduler.printWaitingTimes();
 }
 
 function showAddedProcess(process){
-    console.log("show added process running");
     var table = document.getElementById("process_list");
 
     var tr = document.createElement("tr");
@@ -241,11 +225,9 @@ function drawGanttChart(){
     for(var i = 0; i < no_of_rows; i++){
         var chart_row = document.createElement("div");
         chart_row.setAttribute('class', "row gantt-row");
-        // chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
 
         var time_row = document.createElement("div");
         time_row.setAttribute('class', "row");
-        // time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
 
         for(var j = i * 30; j < (i * 30) + 30; j++){
             if(j < length){
@@ -317,11 +299,7 @@ function addChartStartingElementTime(time, row, ele_length, ele_number){
 }
 
 function showProcessInfo(process_name, tat, waiting_time, process_color){
-    console.log("showProcessInfo works");
-    console.log(tat);
-    console.log(waiting_time);
-
-    var modal = document.getElementById('myModal');
+     var modal = document.getElementById('myModal');
     var process_info_card = document.getElementById("process-info-card");
     var process_info_inner_card = document.getElementById("process-info-inner-card");
 
@@ -376,8 +354,6 @@ function makeProgressProcessTable(){
 }
 
 function addToProgressProcessTable(process){
-    console.log("add to progress process table running");
-    
     var table = document.getElementById("progress_process_table");
 
     var tr = document.createElement("tr");
@@ -412,23 +388,19 @@ function drawProgressGanttChart(){
 
     var length = chart_elements.length;
     ele_length = (length > 30) ? 100/30 : 100/length;
-    console.log("ele_length " + ele_length);
     
     var no_of_rows = Math.ceil(length/30);
-    console.log("no of rows " + no_of_rows);
-
 
     for(var i = 0; i < no_of_rows; i++){
         var chart_row = document.createElement("div");
         chart_row.setAttribute('class', "row gantt-row");
         chart_row.setAttribute('style', "opacity:0.0;");
-        chart_row.setAttribute('id', "gantt_chart_" + i); //might not be needed
+        chart_row.setAttribute('id', "gantt_chart_" + i); 
         
 
         var time_row = document.createElement("div");
         time_row.setAttribute('class', "row");
-        //time_row.setAttribute('style', "opacity:0.0;");
-        time_row.setAttribute('id', "gantt_time_" + i); //might not be needed
+        time_row.setAttribute('id', "gantt_time_" + i); 
 
         for(var j = i * 30; j < (i * 30) + 30; j++){
                 if(j < length){
@@ -504,13 +476,10 @@ function addProgressChartStartingElementTime(time, row, ele_length, ele_number){
 function animateProgressGanttChart(){
     var chart_elements = scheduler.getExecutingOrder();
     var length = chart_elements.length;
-    console.log("animating gantt chart");
-    console.log("no of cards = " + length);
-
+ 
     for (var i = 0; i < length; i++){
 
         if(i % 30 == 0){
-            console.log("adding row");
             var row_no = i / 30;
             var chart_row_id = "#gantt_chart_".concat(row_no);
             var time_row_id = "gantt_time_".concat(row_no);
@@ -528,25 +497,21 @@ function animateProgressGanttChart(){
 }
 
 function animateChartElement(id, delay){
-    console.log("animating" + id);
     var card = $(id);
     card.delay(delay).animate({width:ele_length+"%"});
 }
 
 function animateTimeElement(id, delay){
-    console.log("animating" + id);
     var time = $(id);
     time.delay(delay).animate({opacity:1.0});
 }
 
 function animateChartRow(id,delay){
-    console.log("animating" + id + " delay " + delay);
     var chart_row = $(id);
     chart_row.delay(delay).animate({opacity:1.0});
 }
 
 function animateTimeRow(id,delay){
-    console.log("animating" + id + " delay " + delay);
     var time_row = $(id);
     time_row.delay(delay).animate({opacity:1.0});
 }
@@ -589,7 +554,6 @@ function showCurrentProcess(){
 }
 
 function animateCurrentProcess(id, delay){
-    console.log("animating current process");
 
     var current_process_id = $(id);
     current_process_id.delay(delay).fadeToggle(const_delay/10);
@@ -599,7 +563,6 @@ function animateCurrentProcess(id, delay){
 function showReadyQueue(){
     
     var ready_queue = scheduler.getReadyQueue();
-    //console.log(ready_queue);
     var main_div = document.getElementById("ready_queue");
     var max_ready_queue_length = 0;
 
@@ -638,7 +601,6 @@ function addReadyQueueElement(process, outer_div, width){
     }
 
     var div = document.createElement("div");
-    //div.setAttribute('id', "chart_ele_" + ele_number);
     div.setAttribute('style', "width:" + div_width + "%;");
     div.setAttribute('class', "ready-queue-process");
    
@@ -669,8 +631,6 @@ function addReadyQueueElement(process, outer_div, width){
 }
 
 function animateReadyQueueRow(id, delay){
-    console.log("animating current process");
-
     var current_process_id = $(id);
     current_process_id.delay(delay).fadeToggle(const_delay/10);
     current_process_id.delay(const_delay*8/10).fadeToggle(const_delay/10);

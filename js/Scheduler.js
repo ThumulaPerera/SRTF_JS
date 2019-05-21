@@ -84,7 +84,7 @@ class Scheduler{
             var process = this._finished_jobs[i];
             total_turnaround_time += this.calcTurnaroundTime(process);
         }
-        return total_turnaround_time/total_no_of_processes;
+        return Math.round(total_turnaround_time * 1000/total_no_of_processes) / 1000;
     }
 
     calcWaitingTime(process){
@@ -98,7 +98,7 @@ class Scheduler{
             var process = this._finished_jobs[i];
             total_waiting_time += this.calcWaitingTime(process);
         }
-        return total_waiting_time/total_no_of_processes;
+        return Math.round(total_waiting_time * 1000/total_no_of_processes) / 1000;
     }
 
     print(){

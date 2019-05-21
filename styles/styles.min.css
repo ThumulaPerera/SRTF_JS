@@ -283,6 +283,13 @@ h3 {
     }
   }
 
+  @media print and (color) {
+    * {
+       -webkit-print-color-adjust: exact;
+       print-color-adjust: exact;
+    }
+ }
+
   .val-error{
       color: yellow;
       font-size: .8rem;
