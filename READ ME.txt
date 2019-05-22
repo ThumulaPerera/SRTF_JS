@@ -1,0 +1,5 @@
+SRTF_SCHEDULER
+
+*open scheduler.html using a web browser (Animations work best if a local server like Apache is used)
+
+*alternatively go to www.thumulaperera.github.io/SRTF_JS
